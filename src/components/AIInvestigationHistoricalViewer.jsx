@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { PageSkeleton } from "./LoadingStates";
 import InvestigationReportView from "./InvestigationReportView";
+import { API_BASE_URL } from "../config/api";
 
 /**
  * Dedicated Canonical AI Investigation Historical Viewer
@@ -25,7 +26,7 @@ import InvestigationReportView from "./InvestigationReportView";
  * Replays the original saved snapshot directly from Neon PostgreSQL without re-running or recalculating.
  */
 export default function AIInvestigationHistoricalViewer({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   reportId,
   initialData = null,
   onBack,

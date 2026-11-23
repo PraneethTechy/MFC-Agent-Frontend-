@@ -32,8 +32,7 @@ import AIArchitecturePage from "./components/AIArchitecturePage";
 import AIInvestigationHistoricalViewer from "./components/AIInvestigationHistoricalViewer";
 import { PageSkeleton } from "./components/LoadingStates";
 import { apiCache } from "./services/apiCache";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+import { API_BASE_URL, getApiUrl } from "./config/api";
 
 /**
  * Unified Route wrapper for Data Upload 3-Stage Workflow (/upload, /upload/validate/:sessionId, /upload/results/:sessionId)

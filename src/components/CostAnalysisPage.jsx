@@ -34,9 +34,10 @@ import {
   ErrorBanner,
   EmptyFilteredState,
 } from "./LoadingStates";
+import { API_BASE_URL } from "../config/api";
 
 export default function CostAnalysisPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   routeParams = {},

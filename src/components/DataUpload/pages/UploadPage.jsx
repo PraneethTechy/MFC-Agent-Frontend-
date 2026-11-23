@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import DataImportStudio from "../../DataImportStudio";
+import { API_BASE_URL } from "../../../config/api";
 
 /**
  * Stage 1: Dataset Upload Page (/upload)
@@ -9,7 +10,7 @@ import DataImportStudio from "../../DataImportStudio";
  * On upload start/completion, navigates to /upload/validate/:sessionId.
  */
 export default function UploadPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onImportSuccess,
   onUploadStateChange,

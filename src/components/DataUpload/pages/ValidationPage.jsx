@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import DataImportStudio from "../../DataImportStudio";
+import { API_BASE_URL } from "../../../config/api";
 
 /**
  * Stage 2: Validation & Processing Page (/upload/validate/:sessionId)
@@ -9,7 +10,7 @@ import DataImportStudio from "../../DataImportStudio";
  * On completion, navigates to /upload/results/:sessionId.
  */
 export default function ValidationPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onImportSuccess,
   onUploadStateChange,

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ShieldCheck, AlertCircle, AlertTriangle, XCircle, Info, RefreshCw, CheckCircle2 } from "lucide-react";
+import { API_BASE_URL } from "../config/api";
 
-export default function DataQualityTrust({ apiBaseUrl }) {
+export default function DataQualityTrust({ apiBaseUrl = API_BASE_URL }) {
   const [summary, setSummary] = useState(null);
   const [issues, setIssues] = useState([]);
   const [filterSeverity, setFilterSeverity] = useState("ALL");

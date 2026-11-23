@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import DataImportStudio from "../../DataImportStudio";
+import { API_BASE_URL } from "../../../config/api";
 
 /**
  * Stage 3: Investigation Results Page (/upload/results/:sessionId)
@@ -9,7 +10,7 @@ import DataImportStudio from "../../DataImportStudio";
  * for the exact session ID resolved from the URL.
  */
 export default function InvestigationResultPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   onImportSuccess,

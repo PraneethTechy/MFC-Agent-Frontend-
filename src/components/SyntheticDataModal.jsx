@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Sparkles, CheckCircle2, RefreshCw, AlertCircle, Database, HelpCircle } from "lucide-react";
+import { API_BASE_URL } from "../config/api";
 
-export default function SyntheticDataModal({ apiBaseUrl, onGenerated }) {
+export default function SyntheticDataModal({ apiBaseUrl = API_BASE_URL, onGenerated }) {
   const [generating, setGenerating] = useState(false);
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState(null);

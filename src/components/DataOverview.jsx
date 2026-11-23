@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Factory, Package, Layers, Truck, CheckCircle2, Search, ArrowRight } from "lucide-react";
+import { API_BASE_URL } from "../config/api";
 
-export default function DataOverview({ apiBaseUrl }) {
+export default function DataOverview({ apiBaseUrl = API_BASE_URL }) {
   const [plants, setPlants] = useState([]);
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);

@@ -54,6 +54,8 @@ const isCleanDatasetRef = (ref) => {
   return true;
 };
 
+import { API_BASE_URL } from "../config/api";
+
 /**
  * Manufacturing Intelligence Reports - Investigation History & Retrieval Centre
  * Reopens exact, original saved investigation results for:
@@ -61,7 +63,7 @@ const isCleanDatasetRef = (ref) => {
  * 2. AI Investigations (via AIInvestigationHistoricalViewer)
  */
 export default function ReportsPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   refreshKey = 0,
@@ -294,9 +296,8 @@ export default function ReportsPage({
             title="Refresh history"
           >
             <RefreshCw
-              className={`w-3.5 h-3.5 ${
-                isUpdating || reportsLoading || summaryLoading ? "animate-spin text-purple-600" : ""
-              }`}
+              className={`w-3.5 h-3.5 ${isUpdating || reportsLoading || summaryLoading ? "animate-spin text-purple-600" : ""
+                }`}
             />
           </button>
         </div>
@@ -307,11 +308,10 @@ export default function ReportsPage({
         {/* Card 1: Total Upload Investigations */}
         <div
           onClick={() => setActiveTab("upload")}
-          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${
-            activeTab === "upload"
+          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${activeTab === "upload"
               ? "border-purple-400 shadow-md ring-2 ring-purple-100"
               : "border-purple-100 shadow-[0_2px_12px_rgba(111,61,186,0.04)] hover:border-purple-200"
-          } flex flex-col justify-between`}
+            } flex flex-col justify-between`}
         >
           <div>
             <div className="flex items-center justify-between">
@@ -330,11 +330,10 @@ export default function ReportsPage({
         {/* Card 2: Total AI Investigations */}
         <div
           onClick={() => setActiveTab("ai")}
-          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${
-            activeTab === "ai"
+          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${activeTab === "ai"
               ? "border-purple-400 shadow-md ring-2 ring-purple-100"
               : "border-purple-100 shadow-[0_2px_12px_rgba(111,61,186,0.04)] hover:border-purple-200"
-          } flex flex-col justify-between`}
+            } flex flex-col justify-between`}
         >
           <div>
             <div className="flex items-center justify-between">
@@ -353,11 +352,10 @@ export default function ReportsPage({
         {/* Card 3: Total Saved Investigations */}
         <div
           onClick={() => setActiveTab("all")}
-          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${
-            activeTab === "all"
+          className={`bg-white rounded-2xl p-4 sm:p-5 min-h-[115px] border cursor-pointer transition-all ${activeTab === "all"
               ? "border-purple-400 shadow-md ring-2 ring-purple-100"
               : "border-purple-100 shadow-[0_2px_12px_rgba(111,61,186,0.04)] hover:border-purple-200"
-          } flex flex-col justify-between`}
+            } flex flex-col justify-between`}
         >
           <div>
             <div className="flex items-center justify-between">
@@ -395,17 +393,15 @@ export default function ReportsPage({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-1 w-full">
           <button
             onClick={() => setActiveTab("all")}
-            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${
-              activeTab === "all"
+            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${activeTab === "all"
                 ? "bg-[#7c3aed] text-white shadow-sm font-black"
                 : "bg-transparent text-slate-600 hover:text-slate-900 hover:bg-white/70 font-semibold"
-            }`}
+              }`}
           >
             <span>All Investigations</span>
             <span
-              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${
-                activeTab === "all" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
-              }`}
+              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${activeTab === "all" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                }`}
             >
               {totalAll}
             </span>
@@ -413,18 +409,16 @@ export default function ReportsPage({
 
           <button
             onClick={() => setActiveTab("upload")}
-            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${
-              activeTab === "upload"
+            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${activeTab === "upload"
                 ? "bg-[#7c3aed] text-white shadow-sm font-black"
                 : "bg-transparent text-slate-600 hover:text-slate-900 hover:bg-white/70 font-semibold"
-            }`}
+              }`}
           >
             <Upload className="w-3.5 h-3.5" />
             <span>Dataset Upload Investigations</span>
             <span
-              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${
-                activeTab === "upload" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
-              }`}
+              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${activeTab === "upload" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                }`}
             >
               {totalUploads}
             </span>
@@ -432,18 +426,16 @@ export default function ReportsPage({
 
           <button
             onClick={() => setActiveTab("ai")}
-            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${
-              activeTab === "ai"
+            className={`w-full h-10 sm:h-11 px-4 rounded-xl text-xs sm:text-[13.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 text-center truncate ${activeTab === "ai"
                 ? "bg-[#7c3aed] text-white shadow-sm font-black"
                 : "bg-transparent text-slate-600 hover:text-slate-900 hover:bg-white/70 font-semibold"
-            }`}
+              }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Investigations</span>
             <span
-              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${
-                activeTab === "ai" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
-              }`}
+              className={`text-[11px] px-2 py-0.5 rounded-full font-mono ${activeTab === "ai" ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                }`}
             >
               {totalAI}
             </span>
@@ -544,17 +536,17 @@ export default function ReportsPage({
               {activeTab === "upload"
                 ? "No dataset investigations saved yet."
                 : activeTab === "ai"
-                ? "No AI investigations saved yet."
-                : isFiltered
-                ? "No investigations match your filter criteria."
-                : "No saved investigations found."}
+                  ? "No AI investigations saved yet."
+                  : isFiltered
+                    ? "No investigations match your filter criteria."
+                    : "No saved investigations found."}
             </h3>
             <p className="text-xs text-slate-500 max-w-md mx-auto">
               {activeTab === "upload"
                 ? "Upload manufacturing data packages in Data Upload to generate deterministic cost variance investigations."
                 : activeTab === "ai"
-                ? "Run natural-language cost inquiries in AI Investigations to generate structured analytical reports."
-                : "Try clearing your search query or period filter to view saved records."}
+                  ? "Run natural-language cost inquiries in AI Investigations to generate structured analytical reports."
+                  : "Try clearing your search query or period filter to view saved records."}
             </p>
           </div>
 

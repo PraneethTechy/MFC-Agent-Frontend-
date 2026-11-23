@@ -21,13 +21,14 @@ import {
   Layers,
   ShieldCheck,
 } from "lucide-react";
+import { API_BASE_URL } from "../config/api";
 
 export default function AIChatPopup({
   isOpen,
   onClose,
   initialQuery = "",
   onClearInitialQuery,
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
 }) {
   const [minimized, setMinimized] = useState(false);
   const [showHistory, setShowHistory] = useState(false);

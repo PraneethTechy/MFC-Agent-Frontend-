@@ -137,8 +137,10 @@ const FORM_PRESETS = [
   },
 ];
 
+import { API_BASE_URL } from "../config/api";
+
 export default function AIInvestigationsPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   routeParams = {},

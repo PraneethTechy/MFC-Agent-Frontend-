@@ -53,10 +53,11 @@ import {
   downloadExecutiveCSVReport,
   downloadExecutivePDFReport,
 } from "../services/reportExportService";
+import { API_BASE_URL } from "../config/api";
 
 
 export default function DataImportStudio({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   onImportSuccess,

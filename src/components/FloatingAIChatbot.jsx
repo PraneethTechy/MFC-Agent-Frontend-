@@ -49,6 +49,8 @@ const sanitizeFinding = (f) => {
   };
 };
 
+import { API_BASE_URL } from "../config/api";
+
 export default function FloatingAIChatbot({
   isOpen: propIsOpen,
   onClose,
@@ -61,7 +63,7 @@ export default function FloatingAIChatbot({
   dataOrigin = "CROSS_STORE (Session vs Global)",
   reportingPeriod = null,
   currentPage = "",
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
 }) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = propIsOpen !== undefined ? propIsOpen : internalIsOpen;

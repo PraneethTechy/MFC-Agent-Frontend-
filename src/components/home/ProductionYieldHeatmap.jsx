@@ -6,6 +6,7 @@ import {
   RefreshCw,
   CheckCircle2,
 } from "lucide-react";
+import { getApiUrl } from "../../config/api";
 
 export default function ProductionYieldHeatmap() {
   const [selectedPeriod, setSelectedPeriod] = useState("3_months");
@@ -23,7 +24,7 @@ export default function ProductionYieldHeatmap() {
   const fetchHeatmapData = async (period) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/home/production-yield-heatmap?period=${period}`);
+      const res = await fetch(getApiUrl(`/api/home/production-yield-heatmap?period=${period}`));
       if (res.ok) {
         const json = await res.json();
         setHeatmapData(json);

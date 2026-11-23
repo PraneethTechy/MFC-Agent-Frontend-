@@ -31,6 +31,7 @@ import {
 import { apiCache } from "../services/apiCache";
 import { useCachedAnalytics } from "../hooks/useCachedAnalytics";
 import { UpdatingIndicator } from "./LoadingStates";
+import { API_BASE_URL } from "../config/api";
 
 
 /**
@@ -54,7 +55,7 @@ function CardLoadingOverlay({ title = "Updating analytics...", subtitle = null }
 }
 
 export default function OverviewPage({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   refreshKey = 0,
@@ -775,11 +776,10 @@ export default function OverviewPage({
                 setDataMode(nextMode);
                 setIsCustomMode(false);
               }}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border transition-all cursor-pointer ${
-                (data?.data_mode || dataMode) === "PRODUCTION"
-                  ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100 shadow-2xs"
-                  : "bg-indigo-50 text-indigo-700 border-indigo-300 hover:bg-indigo-100 shadow-2xs"
-              }`}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border transition-all cursor-pointer ${(data?.data_mode || dataMode) === "PRODUCTION"
+                ? "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100 shadow-2xs"
+                : "bg-indigo-50 text-indigo-700 border-indigo-300 hover:bg-indigo-100 shadow-2xs"
+                }`}
               title={`Active Data Mode: ${data?.data_mode || dataMode}. Click to switch to ${dataMode === "PRODUCTION" ? "DEMO / BENCHMARK mode" : "PRODUCTION (baseline-only) mode"}.`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${(data?.data_mode || dataMode) === "PRODUCTION" ? "bg-emerald-500" : "bg-indigo-500 animate-pulse"}`} />
@@ -854,22 +854,20 @@ export default function OverviewPage({
                         key={p.id || p.display_range}
                         type="button"
                         onClick={() => handleSelectPreset(p)}
-                        className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer border ${
-                          isSelected
-                            ? "bg-purple-50/90 border-purple-300 text-purple-900 font-bold shadow-xs ring-1 ring-purple-200"
-                            : "border-slate-100 hover:border-purple-200 hover:bg-slate-50/80 text-slate-700 font-medium"
-                        }`}
+                        className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between cursor-pointer border ${isSelected
+                          ? "bg-purple-50/90 border-purple-300 text-purple-900 font-bold shadow-xs ring-1 ring-purple-200"
+                          : "border-slate-100 hover:border-purple-200 hover:bg-slate-50/80 text-slate-700 font-medium"
+                          }`}
                       >
                         <div className="truncate mr-2">
                           <div className="flex items-center gap-1.5">
                             <span className="font-bold">{p.name}</span>
                             {p.badge && (
                               <span
-                                className={`text-[9px] px-1.5 py-0.2 rounded-md font-semibold tracking-wide ${
-                                  isSelected
-                                    ? "bg-purple-200 text-purple-800"
-                                    : "bg-slate-100 text-slate-600"
-                                }`}
+                                className={`text-[9px] px-1.5 py-0.2 rounded-md font-semibold tracking-wide ${isSelected
+                                  ? "bg-purple-200 text-purple-800"
+                                  : "bg-slate-100 text-slate-600"
+                                  }`}
                               >
                                 {p.badge}
                               </span>
@@ -1521,9 +1519,8 @@ export default function OverviewPage({
                         x={pt.x}
                         y={Math.max(padT - 4, pt.y - 10)}
                         textAnchor="middle"
-                        className={`text-[10px] font-bold ${
-                          pt.isAnomaly ? "fill-purple-900 font-extrabold" : "fill-slate-600"
-                        }`}
+                        className={`text-[10px] font-bold ${pt.isAnomaly ? "fill-purple-900 font-extrabold" : "fill-slate-600"
+                          }`}
                       >
                         {pt.numDisplay}
                       </text>
@@ -2165,9 +2162,8 @@ export default function OverviewPage({
                         onClick={() => {
                           setSelectedPlant(isSelected ? "All Plants" : pl.plant_code);
                         }}
-                        className={`hover:bg-purple-50/50 cursor-pointer transition-colors ${
-                          isSelected ? "bg-purple-50/80 font-bold ring-1 ring-purple-200 rounded" : ""
-                        }`}
+                        className={`hover:bg-purple-50/50 cursor-pointer transition-colors ${isSelected ? "bg-purple-50/80 font-bold ring-1 ring-purple-200 rounded" : ""
+                          }`}
                       >
                         <td className="py-2 text-xs font-bold text-slate-800">
                           {pl.plant_code}

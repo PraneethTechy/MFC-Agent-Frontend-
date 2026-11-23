@@ -27,9 +27,10 @@ import {
 } from "lucide-react";
 import VarianceWaterfall from "./VarianceWaterfall";
 import FindingDetailDrawer from "./FindingDetailDrawer";
+import { API_BASE_URL } from "../config/api";
 
 export default function InvestigationReport({
-  apiBaseUrl = "/api",
+  apiBaseUrl = API_BASE_URL,
   onNavigate,
   onOpenAIChat,
   reportId: propReportId,
