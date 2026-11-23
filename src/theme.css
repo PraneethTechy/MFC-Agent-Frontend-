@@ -1,0 +1,172 @@
+/* Manufacturing Cost Agent - Design System Theme Tokens */
+
+:root {
+  /* Brand Palette */
+  --brand-purple: #6f3dba;
+  --brand-blue: #4d8eeb;
+  --brand-orange: #f58a3a;
+  --brand-navy: #1f2f59;
+  --brand-white: #ffffff;
+  --brand-bg: #ffffff;
+  --brand-blue-soft: #eaf4ff;
+  --brand-purple-soft: #f3eeff;
+  --brand-peach-soft: #fff2eb;
+  --sky: #7fb0f2;
+  --cyan: #31b7c3;
+
+  /* Typography / Inks */
+  --text-primary: #1f2f59;
+  --text-secondary: #54627e;
+  --text-muted: #98a2b3;
+  --on-accent: #ffffff;
+  --muted-ink: #64748b;
+
+  /* Surfaces & Canvas */
+  --page-bg: #f5f7fa;
+  --card-surface: #ffffff;
+  --secondary-bg: #f8fafd;
+  --surface-rgb: 255, 255, 255;
+  --surface-hi: #ffffff;
+  --white: #ffffff;
+  --kg-bg-2: #ffffff;
+  --kg-bg-3: #ffffff;
+  --light: #ffffff;
+  --muted-fill: #f8fafc;
+  --node-glass: rgba(255, 255, 255, 0.94);
+  --shadow-rgb: 0, 0, 0;
+  --line-rgb: 226, 232, 240;
+  --paper-rgb: 255, 255, 255;
+
+  /* Graph Depth Ramp */
+  --depth-0: #e45c72;
+  --depth-1: #6f3dba;
+  --depth-2: #4d8eeb;
+  --depth-3: #f58a3a;
+  --depth-4: #31b7c3;
+  --depth-5: #b88943;
+  --depth-6: #8a63d2;
+  --depth-7: #3e7bc4;
+
+  /* Backdrop Washes */
+  --bx-wash-1: #ffffff;
+  --bx-wash-2: #ffffff;
+  --bx-wash-3: #ffffff;
+  --bx-wash-4: #ffffff;
+  --bx-wash-5: #ffffff;
+  --bx-wash-6: #ffffff;
+  --ghost-ink: rgba(103, 104, 106, 0.14);
+  --signal-flash: #ffffff;
+
+  /* Charts */
+  --chart-c1: #4d8eeb;
+  --chart-c2: #d9701f;
+  --chart-c3: #6f3dba;
+  --chart-c4: #0e9c86;
+  --chart-o1: #8fb8f2;
+  --chart-o2: #5f97e4;
+  --chart-o3: #3670bb;
+  --chart-o4: #17477f;
+  --chart-axis: #7c839b;
+  --chart-label: #2c2c2c;
+  --chart-surface: #ffffff;
+
+  /* Workspace / Panel Tokens */
+  --dr-bg: #ffffff;
+  --dr-surface: #ffffff;
+  --dr-card: #ffffff;
+  --dr-ink: #172554;
+  --dr-ink-2: #64748b;
+  --dr-ink-3: #8b95ad;
+  --dr-purple: #6d3ccb;
+  --dr-purple-soft: #a78bfa;
+  --dr-blue: #4f8ef7;
+  --dr-border: #e2e8f0;
+  --dr-active: #f8fafc;
+  --dr-hover: #f1f5f9;
+}
+
+:root[data-theme="dark"] {
+  /* Brand Palette (Dark) */
+  --brand-purple: #a684ee;
+  --brand-blue: #78acf5;
+  --brand-orange: #ffab63;
+  --brand-navy: #e7edfa;
+  --brand-white: #e9eefa;
+  --brand-bg: #0b1220;
+  --brand-blue-soft: #142339;
+  --brand-purple-soft: #1e1836;
+  --brand-peach-soft: #2b1d17;
+  --sky: #9cc4f8;
+  --cyan: #4fd3de;
+
+  /* Typography / Inks (Dark) */
+  --text-primary: #f1f5fd;
+  --text-secondary: #b3c0d8;
+  --text-muted: #7d8ba6;
+  --on-accent: #0a1020;
+  --muted-ink: #8494ae;
+
+  /* Surfaces & Canvas (Dark) */
+  --page-bg: #090e1a;
+  --card-surface: #26334d;
+  --secondary-bg: #151e30;
+  --surface-rgb: 25, 34, 53;
+  --surface-hi: #26334d;
+  --white: #1b2540;
+  --kg-bg-2: #111a2b;
+  --kg-bg-3: #162034;
+  --light: #162034;
+  --muted-fill: #151e30;
+  --node-glass: rgba(30, 41, 64, 0.94);
+  --shadow-rgb: 0, 0, 0;
+  --line-rgb: 214, 224, 244;
+  --paper-rgb: 9, 14, 26;
+
+  /* Graph Depth Ramp (Dark) */
+  --depth-0: #ff7d90;
+  --depth-1: #a684ee;
+  --depth-2: #78acf5;
+  --depth-3: #ffab63;
+  --depth-4: #4fd3de;
+  --depth-5: #ddab5f;
+  --depth-6: #b192ec;
+  --depth-7: #6ba2e0;
+
+  /* Backdrop Washes (Dark) */
+  --bx-wash-1: #13233d;
+  --bx-wash-2: #1b1938;
+  --bx-wash-3: #2c2019;
+  --bx-wash-4: #2a1a28;
+  --bx-wash-5: #1d1a3c;
+  --bx-wash-6: #101f36;
+  --ghost-ink: rgba(190, 205, 235, 0.1);
+  --signal-flash: #dce8ff;
+
+  /* Charts (Dark) */
+  --chart-c1: #6ba5f5;
+  --chart-c2: #f0913e;
+  --chart-c3: #a684ee;
+  --chart-c4: #2bc0a6;
+  --chart-o1: #2e5c98;
+  --chart-o2: #4a7ec2;
+  --chart-o3: #71a3e4;
+  --chart-o4: #a6cafa;
+  --chart-axis: #8d97ae;
+  --chart-label: #dfe6f4;
+  --chart-surface: #192235;
+
+  /* Workspace / Panel Tokens (Dark) */
+  --dr-bg: #10121b;
+  --dr-surface: #171a27;
+  --dr-card: rgba(23, 26, 39, 0.82);
+  --dr-ink: #f1f5ff;
+  --dr-ink-2: #98a2b8;
+  --dr-ink-3: #78829a;
+  --dr-purple: #9b7cf6;
+  --dr-purple-soft: #b9a4fb;
+  --dr-blue: #4f8ef7;
+  --dr-border: #292d40;
+  --dr-active: #211b38;
+  --dr-hover: #1b1f30;
+}
+
