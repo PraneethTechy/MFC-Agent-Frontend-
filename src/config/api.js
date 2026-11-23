@@ -38,18 +38,26 @@ if (isProd) {
     resolvedBaseUrl = rawBaseUrl;
   }
 } else {
-  // Development mode: default to local FastAPI server on port 8000
-  resolvedBaseUrl = rawBaseUrl || "http://localhost:8000";
+  // Development mode: use rawBaseUrl or default to "/api" (proxied to backend in vite.config.js)
+  resolvedBaseUrl = rawBaseUrl || "/api";
 }
 
-// Strip any trailing slashes for predictable endpoint concatenation
-export const API_BASE_URL = resolvedBaseUrl.replace(/\/+$/, "");
+// Strip trailing slashes
+let cleanBase = resolvedBaseUrl.trim().replace(/\/+$/, "");
+
+// Normalize to ensure base includes /api unless empty (supports both https://domain.com and https://domain.com/api)
+if (cleanBase && !cleanBase.endsWith("/api")) {
+  cleanBase += "/api";
+}
+
+export const API_BASE_URL = cleanBase;
 
 /**
  * Resolves an API endpoint path against the centralized API_BASE_URL.
  * Preserves third-party / external absolute URLs without modification.
+ * Automatically prevents duplicate "/api/api" if both base and endpoint specify "/api".
  * 
- * @param {string} endpoint - API path (e.g., "/api/reports/123" or "http://external.com/data")
+ * @param {string} endpoint - API path (e.g., "/reports/123", "/api/reports/123", or "http://external.com/data")
  * @returns {string} - Fully qualified URL or absolute path
  */
 export function getApiUrl(endpoint) {
@@ -66,7 +74,13 @@ export function getApiUrl(endpoint) {
     return endpoint;
   }
 
-  const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  let cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+
+  // Prevent duplicate "/api/api" if base ends with /api and endpoint starts with /api/
+  if (API_BASE_URL.endsWith("/api") && cleanEndpoint.startsWith("/api/")) {
+    cleanEndpoint = cleanEndpoint.slice(4);
+  }
+
   return `${API_BASE_URL}${cleanEndpoint}`;
 }
 
