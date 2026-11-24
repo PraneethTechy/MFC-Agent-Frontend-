@@ -571,6 +571,14 @@ export default function DataImportStudio({
       if (res.ok) {
         const json = await res.json();
         setReportData(json);
+        if (json.report_id) {
+          setGeneratedReportId(json.report_id);
+        } else if (activeSessionId) {
+          setGeneratedReportId(activeSessionId);
+        }
+        if (json.status === "COMMITTED" || json.consolidation_status === "COMMITTED") {
+          setConsolidationStatus("COMMITTED");
+        }
         if (json.available_granularities && !json.available_granularities.includes(trendPeriod)) {
           setTrendPeriod(json.default_granularity || json.available_granularities[0]);
         }
@@ -1724,8 +1732,9 @@ export default function DataImportStudio({
       setCommitMessage(null);
       setCommitError(null);
 
+      const commitTargetId = generatedReportId || routeParams?.sessionId || routeParams?.session_id || routeSessionId || "active";
       const res = await fetch(
-        `${apiBaseUrl}/investigation/${encodeURIComponent(generatedReportId)}/approve-consolidation`,
+        `${apiBaseUrl}/investigation/${encodeURIComponent(commitTargetId)}/approve-consolidation`,
         { method: "POST" }
       );
 

@@ -50,6 +50,11 @@ const sanitizeFinding = (f) => {
 };
 
 import { API_BASE_URL } from "../config/api";
+import {
+  buildApplicationContext,
+  getStarterQuestions,
+  getPageTitle,
+} from "../services/chatbotContextService";
 
 export default function FloatingAIChatbot({
   isOpen: propIsOpen,
@@ -208,12 +213,20 @@ export default function FloatingAIChatbot({
     }
   }, [isOpen, isMinimized]);
 
-  const starterQuestions = [
-    "Why did manufacturing cost decrease?",
-    "Which products contributed most to the cost movement?",
-    "Which production line has the highest rejection rate?",
-    "Summarize the most important findings in this investigation",
-  ];
+  // Resolve unified application context across routes
+  const appContext = useMemo(() => {
+    return buildApplicationContext({
+      pathname: currentPage || (typeof window !== "undefined" ? window.location?.pathname : ""),
+      search: typeof window !== "undefined" ? window.location?.search : "",
+      sessionId: effectiveSessionId,
+      reportData,
+      activeMode,
+    });
+  }, [currentPage, effectiveSessionId, reportData, activeMode]);
+
+  const starterQuestions = useMemo(() => {
+    return getStarterQuestions(appContext.page_id);
+  }, [appContext.page_id]);
 
   const handleSendMessage = async (textToSend) => {
     const query = (textToSend || inputMessage).trim();
@@ -235,20 +248,37 @@ export default function FloatingAIChatbot({
 
     try {
       const endpoint = `${apiBaseUrl || "/api"}/investigation/ask`;
+
+      // Extract conversation history for memory (last 6 turns)
+      const recentHistory = messages.slice(-6).map((m) => ({
+        role: m.role,
+        content: m.content || m.headline || "",
+      }));
+
+      const payload = {
+        question: query,
+        session_id: activeMode === "GLOBAL_ONLY" ? "GLOBAL" : effectiveSessionId,
+        investigation_mode: activeMode,
+        parent_report_id: lastReportId,
+        page_context: appContext,
+        conversation_history: recentHistory,
+        reporting_period: appContext.reporting_period || "ALL",
+        product_code: appContext.product_code || "All Products",
+        plant_code: appContext.plant_code || "All Plants",
+        line_code: appContext.line_code || "All Lines",
+        data_origin: appContext.data_mode === "PRODUCTION" ? "REAL_COMMITTED_STORE" : "SYNTHETIC_TEST",
+        scope_filters: {
+          plant_code: appContext.plant_code || reportData?.scope?.plant_code,
+          line_code: appContext.line_code || reportData?.scope?.line_code,
+          product_code: appContext.product_code || reportData?.scope?.product_code,
+          ...appContext.active_filters,
+        },
+      };
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: query,
-          session_id: activeMode === "GLOBAL_ONLY" ? "GLOBAL" : effectiveSessionId,
-          investigation_mode: activeMode,
-          parent_report_id: lastReportId,
-          scope_filters: {
-            plant_code: reportData?.scope?.plant_code,
-            line_code: reportData?.scope?.line_code,
-            product_code: reportData?.scope?.product_code,
-          },
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -280,6 +310,7 @@ export default function FloatingAIChatbot({
         followUps: (data.follow_up_suggestions || []).map(cleanSymbols),
         intent: data.intent,
         dataOrigin: data.data_origin || dataOrigin,
+        sourceMetadata: data.source_metadata || null,
         reportId: data.report_id,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
@@ -301,7 +332,7 @@ export default function FloatingAIChatbot({
       const key = `gwc_floating_chat_${effectiveSessionId || "global"}`;
       sessionStorage.removeItem(key);
       sessionStorage.removeItem("gwc_floating_chat_history");
-    } catch {}
+    } catch { }
   };
 
   const handleToggleOpen = () => {
@@ -398,7 +429,7 @@ export default function FloatingAIChatbot({
 
                 <div className="space-y-1.5">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-1">
-                    Starter Questions:
+                    {appContext.page_title} — Suggested Questions:
                   </span>
                   <div className="grid grid-cols-1 gap-1.5">
                     {starterQuestions.map((q) => (
@@ -451,10 +482,33 @@ export default function FloatingAIChatbot({
                         </div>
                       )}
 
-                      {/* Evidence Tag */}
-                      <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-[9.5px] font-mono text-slate-400">
-                        <span className="truncate pr-2">Certified: {m.dataOrigin}</span>
-                        <span className="shrink-0">{m.timestamp}</span>
+                      {/* Certified Origin & Store Metadata */}
+                      <div className="flex flex-col gap-1 pt-1.5 border-t border-slate-100 text-[9.5px]">
+                        <div className="flex items-center justify-between font-mono text-slate-400">
+                          <span className="truncate pr-2 font-medium text-purple-700">
+                            Certified: {m.sourceMetadata?.source_store || m.dataOrigin}
+                          </span>
+                          <span className="shrink-0">{m.timestamp}</span>
+                        </div>
+                        {m.sourceMetadata && (
+                          <div className="flex flex-wrap items-center gap-1.5 text-[9px] text-slate-500 bg-slate-50 p-1.5 rounded-md border border-slate-100 font-mono">
+                            {m.sourceMetadata.reporting_period && (
+                              <span className="bg-purple-100/60 text-purple-800 px-1 py-0.5 rounded font-sans">
+                                {m.sourceMetadata.reporting_period}
+                              </span>
+                            )}
+                            {m.sourceMetadata.data_freshness && (
+                              <span className="bg-emerald-50 text-emerald-700 px-1 py-0.5 rounded font-sans">
+                                Freshness: {m.sourceMetadata.data_freshness}
+                              </span>
+                            )}
+                            {m.sourceMetadata.calculation_method && (
+                              <span className="bg-slate-100 text-slate-600 px-1 py-0.5 rounded font-sans truncate">
+                                {m.sourceMetadata.calculation_method}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* Follow-up suggestions */}
