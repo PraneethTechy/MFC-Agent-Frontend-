@@ -23,7 +23,7 @@ import {
   Search,
   LineChart,
   TrendingUp,
-  Bell,
+  ClipboardList,
 } from "lucide-react";
 
 export default function CompactArchitectureOverview({
@@ -545,23 +545,23 @@ export default function CompactArchitectureOverview({
 
             {/* Card 2 */}
             <div
-              onClick={() => onSelect && onSelect("s5-alerts")}
+              onClick={() => onSelect && onSelect("s5-playbooks")}
               className={`flex-1 flex items-center gap-2.5 bg-[#FFF9E6] rounded-[9px] px-2.5 py-1.5 border shadow-2xs transition-all cursor-pointer ${
-                selectedId === "s5-alerts"
+                selectedId === "s5-playbooks" || selectedId === "s5-alerts"
                   ? "ring-2 ring-orange-400 border-orange-400 bg-orange-100/60"
                   : "border-[#FDE68A] hover:border-orange-400"
               }`}
-              title="Click to view Proactive Alerting details"
+              title="Click to view Action Playbooks details"
             >
               <div className="w-8 h-8 rounded-[8px] bg-orange-100 text-[#EA580C] flex items-center justify-center shrink-0 border border-orange-300 shadow-xs">
-                <Bell className="w-4.5 h-4.5 stroke-[2.4]" />
+                <ClipboardList className="w-4.5 h-4.5 stroke-[2.2]" />
               </div>
               <div className="flex flex-col min-w-0">
                 <div className="text-[11px] xl:text-[11.5px] font-bold text-[#1E1B3A] leading-tight">
-                  Proactive Alerting
+                  Action Playbooks
                 </div>
                 <span className="text-[8.5px] text-[#6B7280] font-medium leading-tight mt-0.5">
-                  Detect issues
+                  Targeted steps
                 </span>
               </div>
             </div>

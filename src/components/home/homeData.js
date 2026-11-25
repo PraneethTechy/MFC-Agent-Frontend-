@@ -617,16 +617,16 @@ export const ARCHITECTURE_DETAILS = {
     badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
     accentColor: "text-orange-600",
     whatItIs:
-      "The business impact layer. Translates verified diagnostic findings into prioritized management decisions, proactive factory alerts, and continuous operational improvement playbooks.",
+      "The business impact layer. Translates verified diagnostic findings into prioritized management decisions, actionable remediation playbooks, and continuous process optimization.",
     howItWorks: [
       "Synthesizes complex analytical findings into executive decision briefs and assignable action playbooks.",
-      "Triggers proactive early warnings when line defect rates or cost variances breach defined thresholds.",
-      "Prioritizes corrective actions (P1 Critical, P2 High, P3 Medium) based on financial recovery potential.",
+      "Structures corrective actions (P1 Critical, P2 High, P3 Medium) based on financial recovery potential.",
+      "Assigns specific remediation procedures to plant maintenance, quality, and engineering teams.",
       "Monitors post-remediation factory batches to verify that implemented fixes actually recover margin.",
       "Tracks progress toward corporate operational targets, including the 98.5% First Pass Yield benchmark.",
     ],
     informationUsed:
-      "Investigation findings, plant cost targets, alert ledgers, corrective action tracking records, historical baselines.",
+      "Investigation findings, plant cost targets, corrective action ledgers, standard recovery procedures, historical baselines.",
     managementGets:
       "Clear, prioritized action roadmaps that link operational corrections directly to verified dollar savings on the factory floor.",
     businessValue:
@@ -657,28 +657,52 @@ export const ARCHITECTURE_DETAILS = {
       "Accelerates leadership decision cycles, eliminates costly misdirected investments, and secures factory competitiveness.",
   },
 
-  "s5-alerts": {
-    id: "s5-alerts",
+  "s5-playbooks": {
+    id: "s5-playbooks",
     type: "outcome",
-    title: "Proactive Alerting & Anomaly Detection",
-    badgeText: "STAGE 5 • EARLY WARNINGS",
+    title: "Action Playbooks & Corrective Steps",
+    badgeText: "STAGE 5 • CORRECTIVE PLAYBOOKS",
     badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
     accentColor: "text-orange-600",
     whatItIs:
-      "An automated early-warning monitoring system that flags emerging quality slips, scrap spikes, and machine cycle slowdowns before they compound into major losses.",
+      "Structured, prioritized action playbooks (P1 Critical, P2 High, P3 Medium) that translate investigation findings into accountable operational interventions for shopfloor teams.",
     howItWorks: [
-      "Continuously monitors incoming batch telemetry against Statistical Process Control (SPC) upper limits.",
-      "Identifies early defect clusters (e.g., solder bridging rising above 1.5% on Line 3).",
-      "Dispatches real-time alerts to line supervisors and plant quality leads with specific workstation context.",
-      "Monitors uncosted operational run accumulations to prevent month-end financial surprises.",
-      "Tracks recurrent anomalies to identify chronic equipment or supplier quality drift.",
+      "Translates confirmed root cause drivers into clear, step-by-step remediation procedures.",
+      "Ranks action items by financial recovery potential and implementation timeline.",
+      "Assigns specific accountability to plant maintenance, process engineering, or quality leads.",
+      "Defines measurable target recovery milestones (e.g., recover line yield to ≥ 98.5%).",
+      "Validates post-implementation execution to ensure identified variances do not recur.",
     ],
     informationUsed:
-      "Real-time inspection telemetry, hourly production declarations, upper and lower control limits, historical alert logs.",
+      "Investigation RCA findings, department ownership rosters, engineering change records, plant target benchmarks.",
     managementGets:
-      "Early warning of factory anomalies, enabling immediate containment before entire production batches are scrapped.",
+      "Clear, accountable action roadmaps that bridge analytical discoveries directly into plant-floor execution and resolution.",
     businessValue:
-      "Prevents large-scale batch write-offs, curbs scrap expenditure, and maintains assembly line continuity.",
+      "Eliminates recurring defects, halts ongoing scrap losses, and turns analytical findings into verified financial savings.",
+  },
+
+  "s5-alerts": {
+    id: "s5-playbooks",
+    type: "outcome",
+    title: "Action Playbooks & Corrective Steps",
+    badgeText: "STAGE 5 • CORRECTIVE PLAYBOOKS",
+    badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
+    accentColor: "text-orange-600",
+    whatItIs:
+      "Structured, prioritized action playbooks (P1 Critical, P2 High, P3 Medium) that translate investigation findings into accountable operational interventions for shopfloor teams.",
+    howItWorks: [
+      "Translates confirmed root cause drivers into clear, step-by-step remediation procedures.",
+      "Ranks action items by financial recovery potential and implementation timeline.",
+      "Assigns specific accountability to plant maintenance, process engineering, or quality leads.",
+      "Defines measurable target recovery milestones (e.g., recover line yield to ≥ 98.5%).",
+      "Validates post-implementation execution to ensure identified variances do not recur.",
+    ],
+    informationUsed:
+      "Investigation RCA findings, department ownership rosters, engineering change records, plant target benchmarks.",
+    managementGets:
+      "Clear, accountable action roadmaps that bridge analytical discoveries directly into plant-floor execution and resolution.",
+    businessValue:
+      "Eliminates recurring defects, halts ongoing scrap losses, and turns analytical findings into verified financial savings.",
   },
 
   "s5-actions": {
