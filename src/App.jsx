@@ -281,7 +281,9 @@ export default function App() {
       localStorage.setItem("active_upload_session_id", sid);
       return sid;
     }
-    return localStorage.getItem("gwc_active_upload_session") || "83bc61af-e690-4c01-8386-5e8313147008";
+    return (typeof window !== "undefined" && window.location.pathname.startsWith("/upload"))
+      ? (localStorage.getItem("gwc_active_upload_session") || "GLOBAL")
+      : "GLOBAL";
   });
 
   useEffect(() => {
@@ -421,7 +423,11 @@ export default function App() {
       {/* Main Persistent Content Area with Client-Side Routes */}
       <main
         ref={mainRef}
-        className="flex-1 h-full overflow-y-auto px-4 py-2.5 sm:px-6 sm:py-3.5 min-w-0 flex flex-col bg-white"
+        className={`flex-1 h-full min-w-0 flex flex-col ${
+          location.pathname === "/" || location.pathname.startsWith("/home")
+            ? "bg-[#F6F7FD] overflow-y-auto px-3.5 py-2.5 sm:px-5 sm:py-3"
+            : "bg-white overflow-y-auto px-4 py-2.5 sm:px-6 sm:py-3.5"
+        }`}
       >
         <Routes>
           {/* 00. HOME LANDING DASHBOARD */}
@@ -738,8 +744,8 @@ export default function App() {
         onOpen={() => setIsAIChatOpen(true)}
         initialQuery={aiChatInitialQuery}
         onClearInitialQuery={() => setAiChatInitialQuery("")}
-        sessionId={activeSessionId}
-        investigationMode="UPLOAD_SESSION_WITH_GLOBAL_COMPARISON"
+        sessionId={location.pathname.startsWith("/upload") ? activeSessionId : "GLOBAL"}
+        investigationMode={location.pathname.startsWith("/upload") ? "UPLOAD_SESSION_WITH_GLOBAL_COMPARISON" : "GLOBAL_ONLY"}
         currentPage={location.pathname}
         apiBaseUrl={API_BASE_URL}
       />

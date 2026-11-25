@@ -74,6 +74,10 @@ export default function FloatingAIChatbot({
   const isOpen = propIsOpen !== undefined ? propIsOpen : internalIsOpen;
 
   // Resolve active upload session dynamically from URL, props, or persistent storage
+  const isUploadRoute = Boolean(
+    (currentPage || (typeof window !== "undefined" ? window.location?.pathname : "") || "").includes("/upload")
+  );
+
   const effectiveSessionId = useMemo(() => {
     const match = (currentPage || (typeof window !== "undefined" ? window.location?.pathname : "") || "").match(/^\/upload\/(?:results|validate)\/([^/]+)/);
     if (match && match[1]) {
@@ -82,28 +86,31 @@ export default function FloatingAIChatbot({
     if (sessionId && sessionId !== "GLOBAL") {
       return sessionId;
     }
-    if (typeof window !== "undefined") {
+    if (isUploadRoute && typeof window !== "undefined") {
       const saved = localStorage.getItem("gwc_active_upload_session") || localStorage.getItem("active_upload_session_id");
       if (saved && saved !== "GLOBAL") {
         return saved;
       }
     }
-    return "83bc61af-e690-4c01-8386-5e8313147008";
-  }, [sessionId, currentPage]);
+    return "GLOBAL";
+  }, [sessionId, currentPage, isUploadRoute]);
 
   const [isMinimized, setIsMinimized] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [lastQuery, setLastQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [lastReportId, setLastReportId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [activeMode, setActiveMode] = useState(defaultMode);
+  const [activeMode, setActiveMode] = useState(() => (effectiveSessionId === "GLOBAL" ? "GLOBAL_ONLY" : defaultMode));
 
   // Sync defaultMode when changed from parent
   useEffect(() => {
-    if (defaultMode) {
+    if (effectiveSessionId === "GLOBAL") {
+      setActiveMode("GLOBAL_ONLY");
+    } else if (defaultMode) {
       setActiveMode(defaultMode);
     }
-  }, [defaultMode]);
+  }, [defaultMode, effectiveSessionId]);
 
   // Load scope metadata dynamically for current session
   const [scopeMeta, setScopeMeta] = useState(null);
@@ -233,6 +240,7 @@ export default function FloatingAIChatbot({
     if (!query || isLoading) return;
 
     setErrorMessage(null);
+    setLastQuery(query);
     setInputMessage("");
 
     // Add user message to state
@@ -255,10 +263,11 @@ export default function FloatingAIChatbot({
         content: m.content || m.headline || "",
       }));
 
+      const isGlobal = activeMode === "GLOBAL_ONLY" || effectiveSessionId === "GLOBAL";
       const payload = {
         question: query,
-        session_id: activeMode === "GLOBAL_ONLY" ? "GLOBAL" : effectiveSessionId,
-        investigation_mode: activeMode,
+        session_id: isGlobal ? "GLOBAL" : effectiveSessionId,
+        investigation_mode: isGlobal ? "GLOBAL_ONLY" : activeMode,
         parent_report_id: lastReportId,
         page_context: appContext,
         conversation_history: recentHistory,
@@ -266,7 +275,7 @@ export default function FloatingAIChatbot({
         product_code: appContext.product_code || "All Products",
         plant_code: appContext.plant_code || "All Plants",
         line_code: appContext.line_code || "All Lines",
-        data_origin: appContext.data_mode === "PRODUCTION" ? "REAL_COMMITTED_STORE" : "SYNTHETIC_TEST",
+        data_origin: (isGlobal || appContext.data_mode === "PRODUCTION") ? "REAL_COMMITTED_STORE" : "SYNTHETIC_TEST",
         scope_filters: {
           plant_code: appContext.plant_code || reportData?.scope?.plant_code,
           line_code: appContext.line_code || reportData?.scope?.line_code,
@@ -552,7 +561,7 @@ export default function FloatingAIChatbot({
                 <div className="flex-1">
                   <p className="font-semibold">{errorMessage}</p>
                   <button
-                    onClick={() => handleSendMessage()}
+                    onClick={() => handleSendMessage(lastQuery)}
                     className="mt-1 text-[10.5px] font-bold text-rose-700 underline hover:text-rose-900 cursor-pointer"
                   >
                     Retry Question
